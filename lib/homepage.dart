@@ -112,10 +112,31 @@ class _HomepageState extends State<Homepage> {
              Row(
                mainAxisAlignment: MainAxisAlignment.spaceAround,
              children: [
-               _dataAndTitleWidget("title","data"),
-               _dataAndTitleWidget("title","data"),
+               _dataAndTitleWidget("Humidity",
+                   response?.current?.humidity?.toString()??""),
+               _dataAndTitleWidget("Wind Speed",
+                   "${response?.current?.windKph?.toString()??""} km/h"),
              ],
-           )],
+           ),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+               children: [
+                 _dataAndTitleWidget("UV",
+                     response?.current?.uv?.toString()??""),
+                 _dataAndTitleWidget("Percipitation",
+                     "${response?.current?.precipMm?.toString()??""} mm"),
+               ],
+             ),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+               children: [
+                 _dataAndTitleWidget("Local Time",
+                     response?.location?.localtime?.split("").last??""),
+                 _dataAndTitleWidget("Local Date",
+                     response?.location?.localtime?.split("").first ?? ""),
+               ]
+             )
+           ],
          ),
        )
      ],
@@ -129,8 +150,20 @@ class _HomepageState extends State<Homepage> {
       padding: const EdgeInsets.all(18.0),
       child: Column(
         children: [
-          Text(data),
-          Text(title),
+          Text(data,
+            style: const TextStyle(
+            fontSize: 27,
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
+          ),
+          Text(title,
+            style: const TextStyle(
+              fontSize: 27,
+              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
