@@ -22,6 +22,14 @@ class _HomepageState extends State<Homepage> {
     ));
   }
   Widget _buildSearchWidget(){
-    return SearchBar();
+    return SearchBar(
+    hintText: "Search any Location",
+      onSubmitted: (value){
+      _getWeatherData(value);
+      },
+    );
+  }
+  _getWeatherData(String location)async{
+
   }
 }
