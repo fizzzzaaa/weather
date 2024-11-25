@@ -14,6 +14,8 @@ class _HomepageState extends State<Homepage> {
 
   ApiResponse? response;
   bool inProgress=false;
+  String message="Search for the location to get any weather";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -26,7 +28,8 @@ class _HomepageState extends State<Homepage> {
             if(inProgress)
               CircularProgressIndicator()
 
-            else _buildWeatherWidget(),
+            else Expanded(
+                child: SingleChildScrollView(child: _buildWeatherWidget())),
           ],
         ),
       ),
@@ -43,7 +46,7 @@ class _HomepageState extends State<Homepage> {
 
   Widget _buildWeatherWidget(){
  if(response==null){
-   return Text("Search for the location to get Weather");
+   return Text(message);
  }
  else{
    return Column(
@@ -179,6 +182,10 @@ class _HomepageState extends State<Homepage> {
     try{
       response = await WeatherAPI().getCurrentWeather(location);
     }catch(e){
+      setState(() {
+        message="Failed to get weather";
+        response=null;
+      });
     }finally{
       setState(() {
         inProgress=false;
