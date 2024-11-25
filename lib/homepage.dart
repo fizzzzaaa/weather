@@ -103,11 +103,40 @@ class _HomepageState extends State<Homepage> {
              scale: 0.7,
            ),
          ),
+       ),
+       Card(
+         elevation: 4,
+         color: Colors.white,
+         child: Column(
+           children: [
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+             children: [
+               _dataAndTitleWidget("title","data"),
+               _dataAndTitleWidget("title","data"),
+             ],
+           )],
+         ),
        )
      ],
    );
  }
   }
+
+
+  Widget _dataAndTitleWidget(String title, String data){
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        children: [
+          Text(data),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+
   //return Text(response?.toJson().toString() ??"");
   _getWeatherData(String location)async{
     setState(() {
