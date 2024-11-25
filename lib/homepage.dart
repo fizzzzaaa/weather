@@ -10,6 +10,18 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(child: Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: <Widget>[
+            _buildSearchWidget()
+          ],
+        ),
+      ),
+    ));
+  }
+  Widget _buildSearchWidget(){
+    return SearchBar();
   }
 }
