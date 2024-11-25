@@ -15,10 +15,12 @@ class WeatherAPI{
     return ApiResponse.fromJson(jsonDecode(response.body));
    }
    else{
-     throw Exception("Failed to load weather");
+     print('Failed to load weather, status code: ${response.statusCode}');
+     throw Exception("Failed to load weather, status code: ${response.statusCode}");
    }
     }catch(e){
-      throw Exception("Failed to load weather");
+      print('Error occurred: $e');
+      throw Exception("Failed to load weather: $e");
     }
   }
 }

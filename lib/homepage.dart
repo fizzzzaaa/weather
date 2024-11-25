@@ -11,14 +11,20 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+
+  ApiResponse? response;
+  bool inProgress=false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: <Widget>[
-            _buildSearchWidget()
+          children: [
+            _buildSearchWidget(),
+            if(inProgress)
+              CircularProgressIndicator()
+            else _buildWeatherWidget(),
           ],
         ),
       ),
@@ -32,8 +38,28 @@ class _HomepageState extends State<Homepage> {
       },
     );
   }
+
+  Widget _buildWeatherWidget(){
+ if(response==null){
+   return Text("Search for the location to get Weather");
+ }
+ else{
+   return Column();
+ }
+  }
+  //return Text(response?.toJson().toString() ??"");
   _getWeatherData(String location)async{
-ApiResponse response=await WeatherAPI().getCurrentWeather(location);
-print(response.toJson());
+    setState(() {
+      inProgress=true;
+    });
+
+    try{
+      response = await WeatherAPI().getCurrentWeather(location);
+    }catch(e){
+    }finally{
+      setState(() {
+        inProgress=false;
+      });
+    }
   }
 }

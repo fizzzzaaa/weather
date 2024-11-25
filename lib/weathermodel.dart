@@ -6,14 +6,15 @@ class ApiResponse {
 
   ApiResponse.fromJson(Map<String, dynamic> json) {
     location = json['location'] != null
-        ? new Location.fromJson(json['location'])
+        ? Location.fromJson(json['location'])
         : null;
-    current =
-    json['current'] != null ? new Current.fromJson(json['current']) : null;
+    current = json['current'] != null
+        ? Current.fromJson(json['current'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.location != null) {
       data['location'] = this.location!.toJson();
     }
@@ -38,7 +39,7 @@ class Location {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['name'] = this.name;
     data['country'] = this.country;
     data['localtime'] = this.localtime;
@@ -47,37 +48,38 @@ class Location {
 }
 
 class Current {
-  double? tempC;
-  int? isDay;
+  double? tempC;  // Temperature can be decimal (double)
+  double? isDay;  // Can be 1 or 0, but we cast to double for flexibility
   Condition? condition;
-  double? windKph;
-  int? precipMm;
-  int? humidity;
-  double? uv;
+  double? windKph;  // Wind speed in kph, could be a double
+  double? precipMm;  // Precipitation in mm, could be a decimal (double)
+  double? humidity;  // Humidity percentage, might return as int or double
+  double? uv;  // UV index, could return as an int or double
 
-  Current(
-      {this.tempC,
-        this.isDay,
-        this.condition,
-        this.windKph,
-        this.precipMm,
-        this.humidity,
-        this.uv});
+  Current({
+    this.tempC,
+    this.isDay,
+    this.condition,
+    this.windKph,
+    this.precipMm,
+    this.humidity,
+    this.uv,
+  });
 
   Current.fromJson(Map<String, dynamic> json) {
-    tempC = json['temp_c'];
-    isDay = json['is_day'];
+    tempC = _parseDouble(json['temp_c']);
+    isDay = _parseDouble(json['is_day']);
     condition = json['condition'] != null
-        ? new Condition.fromJson(json['condition'])
+        ? Condition.fromJson(json['condition'])
         : null;
-    windKph = json['wind_kph'];
-    precipMm = json['precip_mm'];
-    humidity = json['humidity'];
-    uv = json['uv'];
+    windKph = _parseDouble(json['wind_kph']);
+    precipMm = _parseDouble(json['precip_mm']);
+    humidity = _parseDouble(json['humidity']);
+    uv = _parseDouble(json['uv']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['temp_c'] = this.tempC;
     data['is_day'] = this.isDay;
     if (this.condition != null) {
@@ -88,6 +90,16 @@ class Current {
     data['humidity'] = this.humidity;
     data['uv'] = this.uv;
     return data;
+  }
+
+  // Helper function to parse data as double, handles both int and double
+  double? _parseDouble(dynamic value) {
+    if (value is int) {
+      return value.toDouble();
+    } else if (value is double) {
+      return value;
+    }
+    return null;
   }
 }
 
@@ -105,7 +117,7 @@ class Condition {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['text'] = this.text;
     data['icon'] = this.icon;
     data['code'] = this.code;
