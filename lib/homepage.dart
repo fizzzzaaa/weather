@@ -56,8 +56,53 @@ class _HomepageState extends State<Homepage> {
              Icons.location_on,
              size: 50,
            ),
-           Text(response?.location?.name??"")
+           Text(response?.location?.name??"",
+             style:const TextStyle(
+               fontSize: 40,
+               fontWeight: FontWeight.w300,
+             ) ,
+           ),
+           Text(
+             response?.location?.country??"",
+             style:const TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.w300,
+             ) ,
+           ),
          ],
+       ),
+       const SizedBox(height: 10,),
+       Row(
+         crossAxisAlignment: CrossAxisAlignment.end,
+         children: [
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Text(
+             (response?.current?.tempC.toString()??"")+" c",
+               style:const TextStyle(
+                 fontSize: 60,
+                 fontWeight: FontWeight.bold,
+               ) ,
+             ),
+           ),
+           Text(
+             (response?.current?.condition?.text.toString()??"")+" c",
+             style:const TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.w500,
+             ) ,
+           ),
+           
+         ],
+       ),
+       Center(
+         child: SizedBox(
+           child: Image.network(
+             "https:${response?.current?.condition?.icon}"
+                 .replaceAll("64x64", "128x128"),
+             scale: 0.7,
+           ),
+         ),
        )
      ],
    );
