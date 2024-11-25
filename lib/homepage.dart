@@ -22,8 +22,10 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           children: [
             _buildSearchWidget(),
+            const SizedBox(height: 20),
             if(inProgress)
               CircularProgressIndicator()
+
             else _buildWeatherWidget(),
           ],
         ),
@@ -44,7 +46,21 @@ class _HomepageState extends State<Homepage> {
    return Text("Search for the location to get Weather");
  }
  else{
-   return Column();
+   return Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     children: [
+       Row(
+         crossAxisAlignment: CrossAxisAlignment.end,
+         children: [
+           Icon(
+             Icons.location_on,
+             size: 50,
+           ),
+           Text(response?.location?.name??"")
+         ],
+       )
+     ],
+   );
  }
   }
   //return Text(response?.toJson().toString() ??"");
